@@ -20,14 +20,33 @@ Configure kerio vpn client for arch linux distributions such as Manjaro, Endeavo
 </pre>
 
 ### 3. Start New Connection To KerioVPN Server
+
+## Automatic way :
+<pre>
+   ~ sudo chmod +x INSTALL
+   ~ sudo ./INSTALL
+</pre>
+
+### You can use 
+<pre>
+   ~ kerio -c --> connect
+   ~ kerio -d --> disconnect
+   ~ kerio -h --> usage :D
+</pre>
+Connected  ^_^
+
+
+## Manual way :
 <br>
 <pre>
    ~ sudo /usr/sbin/kvpnc stop
    ~ sudo /usr/sbin/kvpnc start
-   ~ mac=$(cat /var/log/kerio-kvc/debug.log | grep MAC | tail -1 | tr - : | awk '{print $15}')
+   ~ mac=$(cat /var/log/kerio-kvc/debug.log | tr - : | awk '/MAC/ {print $15}')
    ~ sudo ip link set kvnet addr $mac
 </pre>
-Connected &#0160  ^_^
+Connected  ^_-
+<br>
+
 <br>
 <br>
 <br>
@@ -35,6 +54,8 @@ Connected &#0160  ^_^
 ## To Disconnect
 <pre>
    ~ sudo /usr/sbin/kvpnc stop
+   or
+   ~ kerio -d
 </pre>
 Disconnected !
 <br>
