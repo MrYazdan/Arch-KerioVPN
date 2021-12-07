@@ -1,0 +1,62 @@
+#! /bin/bash
+
+Help()
+{
+    # Display Help
+    echo
+    echo "Notice : Configure kvpnc before use this script!"
+    echo "Repository : https://github.com/MrYazdan/KerioVPN_Arch/"
+    echo
+    echo "Usage:"
+    echo "    kerio -h               Display this help message."
+    echo "    kerio -c               Connect to KerioVPN server."
+    echo "    kerio -d               Disconnect from KerioVPN server."
+    echo
+}
+
+Connect()
+{
+    # Connect to kerio vpn server
+    echo -n "Connecting to kerio vpn server "
+    sleep 1;echo -n ".";sleep 0.5;echo -n ".";sleep 0.5;echo ".";sleep 0.5
+    sudo /usr/sbin/kvpnc stop
+    sudo /usr/sbin/kvpnc start
+    mac=$(cat /var/log/kerio-kvc/debug.log | tr - : | awk '/MAC/ {print $15}')
+    sudo ip link set kvnet addr $mac
+    echo "~ Connected ^_^"
+}
+
+Disconnect()
+{
+    # Disconnect from kerio vpn server
+    echo -n "Disconnecting from kerio vpn server "
+    sleep 1;echo -n ".";sleep 0.5;echo -n ".";sleep 0.5;echo ".";sleep 0.5
+    sudo /usr/sbin/kvpnc stop
+    echo "~ Disconnected !"
+}
+
+# Get options
+while getopts "hcd" option; do
+   case $option in
+
+      h) # Display help
+         Help
+         exit;;
+
+      c) # Connect with kvpnc
+         Connect
+         exit;;
+
+      d) # Disconnect with kvpnc
+         Disconnect
+         exit;;
+
+      *) # Invalid option
+         echo "Error: Invalid option !"
+         exit;;
+
+   esac
+done
+
+Help
+exit
