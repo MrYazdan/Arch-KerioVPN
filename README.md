@@ -41,7 +41,7 @@ Connected  ^_^
 <pre>
    ~ sudo /usr/sbin/kvpnc stop
    ~ sudo /usr/sbin/kvpnc start
-   ~ mac=$(cat /var/log/kerio-kvc/debug.log | tr - : | awk '/MAC/ {print $15}')
+   ~ mac=$(cat /var/log/kerio-kvc/debug.log | tr - : | awk '/MAC/ {print $15}' | tail -n 1)
    ~ sudo ip link set kvnet addr $mac
 </pre>
 Connected  ^_-
